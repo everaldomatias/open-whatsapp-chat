@@ -1,0 +1,36 @@
+.owc-button {
+	background: url( '../images/icon-whatsapp.png' ) center center no-repeat #00A700;
+	background-size: auto 100%;
+	bottom: 30px;
+	border-radius: 200px 200px 200px 200px;
+	-moz-border-radius: 200px 200px 200px 200px;
+	-webkit-border-radius: 200px 200px 200px 200px;
+	height: 60px;
+	left: 30px;
+	position: fixed;
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	text-indent: -999px;
+	width: 60px;
+	z-index: 999;
+	-webkit-box-shadow: -3px 3px 8px 0px rgba(110,110,110,0.5);
+	-moz-box-shadow: -3px 3px 8px 0px rgba(110,110,110,0.5);
+	box-shadow: -3px 3px 8px 0px rgba(110,110,110,0.5);
+}
+@media ( min-width: 767px ) {
+	.owc-button.owc-text {
+		background-position: left;
+		text-indent: 0;
+		width: auto;
+	}
+	.owc-button.owc-text span {
+		color: #fff;
+		display: block;
+		margin: 19px 15px 0 55px;
+	}
+}
+.owc-button:hover {
+	bottom: 40px;
+	text-decoration: none;
+}

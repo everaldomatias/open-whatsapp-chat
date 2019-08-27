@@ -1,0 +1,69 @@
+# Open WhatsApp Chat
+# Copyright 2019 ...
+# This file is distributed under the GNU General Public License v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Open WhatsApp Chat\n"
+"Report-Msgid-Bugs-To: http://everaldo.dev\n"
+"POT-Creation-Date: 2019-05-20 14:10+1000\n"
+"PO-Revision-Date: 2019-05-20 14:10+1000\n"
+"Last-Translator: Everaldo Matias <aoseudispor@everaldo.dev>\n"
+"Language-Team: Everaldo Matias <aoseudispor@everaldo.dev>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.1\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: open-whatsapp-chat.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: open-whatsapp-chat.php:49
+msgid "Settings"
+msgstr ""
+
+#: includes/class-open-whatsapp-chat.php:100
+msgid "Open the WhatsApp Chat"
+msgstr ""
+
+#: includes/class-open-whatsapp-chat.php:106
+msgid "Open the WhatsApp Chat"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:28
+msgid "Settings Admin"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:44
+msgid "Open WhatsApp Chat Plugin Settings"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:51
+msgid "Save Settings"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:79
+msgid "WhatsApp Number"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:87
+msgid "WhatsApp Button Text"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:95
+msgid "WhatsApp Message"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:129
+msgid "Only numbers, example 5511988887777"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:141
+msgid "Empty for use only the WhatsApp logo"
+msgstr ""
