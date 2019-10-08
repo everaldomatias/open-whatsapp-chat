@@ -19,6 +19,7 @@
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Plugin WordPress para adicionar um simples botão para abrir o WhatsApp chat em seu site.
+
 _WordPress plugin to add a simple button to open WhatsApp chat in your site._
 
 ##  Porque o plugin foi removido do repositório oficial do WordPress? ##
