@@ -1,12 +1,21 @@
 # Open WhatsApp Chat #
-Contributors: everaldomatias
+
+**Contributors:** everaldomatias
+
 **Tags:** wordpress, whatsapp, plugin, php, chat
+
 **Stable tag:** 1.0.3
+
 **Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=48LLGK4VPXMBJ
+
 **Requires at least:** 4.5
+
 **Tested up to:** 5.0
+
 **Requires PHP:** 7.0
+
 **License:** GPLv2 or later
+
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Plugin WordPress para adicionar um simples botão para abrir o WhatsApp chat em seu site.
