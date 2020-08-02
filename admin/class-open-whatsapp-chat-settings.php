@@ -108,8 +108,24 @@ class Open_Whatsapp_Chat_Settings {
         
         $new_input = array();
 
+        $check_position = get_option( 'owc_option' );
+        $check_position = $check_position['owc_position'];
+
+        if ( ! isset( $check_position ) || empty( $check_position ) ) {
+            $new_input['owc_position'] = '0';
+        }
+
         if ( isset( $input['owc_number'] ) )
-            $new_input['owc_number'] = absint( $input['owc_number'] );
+            
+            $owc_numbers = sanitize_textarea_field( $input['owc_number'] );
+            $owc_number_explode = explode( "\n", $owc_numbers );
+
+            foreach ( $owc_number_explode as $each ) {
+                $owc_number_arr[] = $each;
+            }
+            $owc_number_arr = array_filter( $owc_number_arr );
+
+            $new_input['owc_number'] = $owc_number_arr;
 
         if ( isset( $input['owc_button'] ) )
             $new_input['owc_button'] = sanitize_text_field( $input['owc_button'] );
@@ -125,10 +141,19 @@ class Open_Whatsapp_Chat_Settings {
      * Get the settings option array and print one of its values
      */
     public function owc_number_callback() {
-        printf(
-            '<input type="text" id="owc_number" name="owc_option[owc_number]" value="%s" /><span class="owc-desc">' . __( 'Only numbers, example 5511988887777', 'open-whatsapp-chat' ) . '</span>',
-            isset( $this->options['owc_number'] ) ? esc_attr( $this->options['owc_number'] ) : ''
-        );
+
+        echo '<textarea id="owc_number" name="owc_option[owc_number]">';
+
+        if ( isset( $this->options['owc_number'] ) ) {
+            foreach( $this->options['owc_number'] as $each ) {
+                echo $each . "\n";
+            }
+        } else {
+            echo '';
+        }
+
+        echo '</textarea><span class="owc-desc">' . __( 'Only numbers, example 5511988887777. Add one number per line. When adding more than one number, they will be used sequentially.', 'open-whatsapp-chat' ) . '</span>';
+        
     }
 
     /** 

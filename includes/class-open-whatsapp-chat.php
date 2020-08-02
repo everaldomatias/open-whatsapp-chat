@@ -22,6 +22,7 @@ class Open_Whatsapp_Chat {
 		if ( is_admin() ) {
 			self::owc_admin_includes();
 			add_action( 'admin_head', array( $this, 'owc_admin_css' ), 50 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'owc_admin_js' ), 50 );
 		}
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'owc_css' ), 50 );
@@ -55,6 +56,15 @@ class Open_Whatsapp_Chat {
 	}
 
 	/**
+	 * Enqueue the Admin JS.
+	 * 
+	 * @return void
+	 */
+	public function owc_admin_js() {
+		wp_enqueue_script( 'repeater-js', plugins_url( '/assets/js/repeater.js', OWC_FILE ) . '', array( 'jquery', 'wp-util' ), '', true );
+	}
+
+	/**
 	*
 	* Verifica qual o navegador está sendo usado.
 	* Passe como parâmetro o nome do navegador que deseja testar
@@ -84,6 +94,13 @@ class Open_Whatsapp_Chat {
 	public function owc_print_button() {
 
 		$owc_option = get_option( 'owc_option' );
+		$owc_option['owc_number'] = array_filter( $owc_option['owc_number'] );
+
+		// Get the position
+		$owc_position = $owc_option['owc_position'];
+
+		$owc_option_count = count($owc_option['owc_number']);
+		
 		if ( $owc_option['owc_number'] && $owc_option['owc_message'] ) {
 
 			if ( $this->owc_what_browser( 'Firefox' ) ) {
@@ -97,16 +114,32 @@ class Open_Whatsapp_Chat {
 
 		    if ( ! empty( $owc_option['owc_button'] ) ) {
 
-		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'] ) . '?text=' . $message . '" class="owc-button owc-text" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '">';
+		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button owc-text" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '">';
 		        echo '<span>' . esc_html( $owc_option['owc_button'] ) . '</span>';
 				echo '</a>';
 		    	
 		    } else {
 
-		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'] ) . '?text=' . $message . '" class="owc-button" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '">';
+		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '">';
 				echo '</a>';
 
-		    }
+			}
+
+			// Increment position
+			
+			if ( $owc_position < $owc_option_count ) {
+				$owc_position++;
+			} else {
+				$owc_position = '0';
+			}
+
+			$update_option = [];
+			$update_option['owc_position'] = $owc_position;
+			$update_option['owc_number']   = $owc_option['owc_number'];
+			$update_option['owc_button']   = $owc_option['owc_button'];
+			$update_option['owc_message']  = $owc_option['owc_message'];
+
+			update_option( 'owc_option', $update_option );
 
 		}
 
