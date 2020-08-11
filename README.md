@@ -4,13 +4,13 @@
 
 **Tags:** wordpress, whatsapp, plugin, php, chat
 
-**Stable tag:** 1.0.3
+**Stable tag:** 2.0.0
 
 **Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=48LLGK4VPXMBJ
 
 **Requires at least:** 4.5
 
-**Tested up to:** 5.0
+**Tested up to:** 4.5
 
 **Requires PHP:** 7.0
 
@@ -37,6 +37,10 @@ As the focus of the plugin is to help people using this tool, I chose to remove 
 With this, I keep the plugin here on Github and will continue to improve it according to the needs and feedback of those who use it.
 
 ## Changelog ##
+
+#### 2.0.0 - 2020-08-11 ####
+- Add option to use more than one WhatsApp number (which are stored in a queue and displayed one by one each click on the button)
+ 
 #### 1.0.3 - 2019-10-08 ####
 - Update readme (and README.md) with new infos 
 

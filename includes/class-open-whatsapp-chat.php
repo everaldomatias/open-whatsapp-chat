@@ -26,7 +26,11 @@ class Open_Whatsapp_Chat {
 		}
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'owc_css' ), 50 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'owc_js' ), 50 );
 		add_action( 'wp_footer', array( $this, 'owc_print_button' ), 50 );
+
+		add_action( 'wp_ajax_update_position_number', array( $this, 'ajax_update_position_number' ) );
+		add_action( 'wp_ajax_nopriv_update_position_number', array( $this, 'ajax_update_position_number' ) );
 
 	}
 
@@ -44,6 +48,14 @@ class Open_Whatsapp_Chat {
 	 */
 	public function owc_css() {
 		wp_enqueue_style( 'owc-css', plugins_url( '/assets/css/style.css', OWC_FILE ) );
+	}
+
+	/**
+	 * Enqueue the JS.
+	 */
+	public function owc_js() {
+		wp_enqueue_script( 'owc-js', plugins_url( '/assets/js/owc-main.js', OWC_FILE ), array( 'jquery' ) );
+		wp_localize_script( 'owc-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'outro_valor' => 1234 ) );
 	}
 
 	/**
@@ -93,13 +105,9 @@ class Open_Whatsapp_Chat {
 	 */
 	public function owc_print_button() {
 
-		$owc_option = get_option( 'owc_option' );
-		$owc_option['owc_number'] = array_filter( $owc_option['owc_number'] );
-
-		// Get the position
-		$owc_position = $owc_option['owc_position'];
-
-		$owc_option_count = count($owc_option['owc_number']);
+		$owc_option   = get_option( 'owc_option' );
+		$owc_position = get_option( 'owc_position' );
+		$owc_position = $owc_position - 1;
 		
 		if ( $owc_option['owc_number'] && $owc_option['owc_message'] ) {
 
@@ -114,34 +122,47 @@ class Open_Whatsapp_Chat {
 
 		    if ( ! empty( $owc_option['owc_button'] ) ) {
 
-		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button owc-text" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '">';
+		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button owc-text" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
 		        echo '<span>' . esc_html( $owc_option['owc_button'] ) . '</span>';
 				echo '</a>';
 		    	
 		    } else {
 
-		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '">';
+		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
 				echo '</a>';
 
 			}
 
-			// Increment position
+		}
+
+	}
+
+	/**
+	 * 
+	 * Update postion number with ajax on click button
+	 * 
+	 */
+	public function ajax_update_position_number() {
+
+		if ( $_REQUEST['action'] == 'update_position_number' ) {
+
+			$owc_position      = get_option( 'owc_position' );
+			$owc_option        = get_option( 'owc_option' );
+			$owc_count_numbers = count( $owc_option['owc_number'] );
+
+			$update = intval( $owc_position );
 			
-			if ( $owc_position < $owc_option_count ) {
-				$owc_position++;
+			if ( $owc_count_numbers == $owc_position ) {
+				$update = 1;
 			} else {
-				$owc_position = '0';
+				$update++;
 			}
-
-			$update_option = [];
-			$update_option['owc_position'] = $owc_position;
-			$update_option['owc_number']   = $owc_option['owc_number'];
-			$update_option['owc_button']   = $owc_option['owc_button'];
-			$update_option['owc_message']  = $owc_option['owc_message'];
-
-			update_option( 'owc_option', $update_option );
+			
+			update_option( 'owc_position', intval( $update ) );
 
 		}
+		
+		wp_die();
 
 	}
 

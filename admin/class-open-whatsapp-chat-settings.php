@@ -17,6 +17,12 @@ class Open_Whatsapp_Chat_Settings {
     public function __construct() {
         add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
         add_action( 'admin_init', array( $this, 'page_init' ) );
+
+        $check_position = get_option( 'owc_position' );
+
+        if ( ! isset( $check_position ) || empty( $check_position ) ) {
+            update_option( 'owc_position', intval( 1 ) );
+        } 
     }
 
     /**
@@ -108,24 +114,15 @@ class Open_Whatsapp_Chat_Settings {
         
         $new_input = array();
 
-        $check_position = get_option( 'owc_option' );
-        $check_position = $check_position['owc_position'];
+        if ( isset( $input['owc_number'] ) ) {
 
-        if ( ! isset( $check_position ) || empty( $check_position ) ) {
-            $new_input['owc_position'] = '0';
+            $owc_numbers = preg_split( '/\r\n|\r|\n/', $input['owc_number'] );
+            $owc_numbers = array_filter( $owc_numbers );
+            $owc_numbers = array_values( $owc_numbers );
+
+            $new_input['owc_number'] = $owc_numbers;
+
         }
-
-        if ( isset( $input['owc_number'] ) )
-            
-            $owc_numbers = sanitize_textarea_field( $input['owc_number'] );
-            $owc_number_explode = explode( "\n", $owc_numbers );
-
-            foreach ( $owc_number_explode as $each ) {
-                $owc_number_arr[] = $each;
-            }
-            $owc_number_arr = array_filter( $owc_number_arr );
-
-            $new_input['owc_number'] = $owc_number_arr;
 
         if ( isset( $input['owc_button'] ) )
             $new_input['owc_button'] = sanitize_text_field( $input['owc_button'] );
