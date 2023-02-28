@@ -66,7 +66,7 @@ class Open_Whatsapp_Chat_Settings {
     /**
      * Register and add settings
      */
-    public function page_init() {        
+    public function page_init() {
         register_setting(
             'owc_option_group', // Option group
             'owc_option', // Option name
@@ -102,7 +102,15 @@ class Open_Whatsapp_Chat_Settings {
             array( $this, 'owc_message_callback' ), // Callback
             'open-whatsapp-chat', // Page
             'setting_section_id' // Section
-        );      
+        );
+
+        add_settings_field(
+            'owc_exceptions', // ID
+            __( 'Exceptions pages', 'open-whatsapp-chat' ), // Title 
+            array( $this, 'owc_exceptions_callback' ), // Callback
+            'open-whatsapp-chat', // Page
+            'setting_section_id' // Section
+        );
     }
 
     /**
@@ -129,6 +137,19 @@ class Open_Whatsapp_Chat_Settings {
 
         if ( isset( $input['owc_message'] ) )
             $new_input['owc_message'] = sanitize_text_field( $input['owc_message'] );
+
+        if ( isset( $input['owc_exceptions'] ) )
+            $new_input['owc_exceptions'] = sanitize_text_field( $input['owc_exceptions'] );
+
+        if ( isset( $input['owc_exceptions'] ) ) {
+
+            $owc_exceptions = preg_split( '/\r\n|\r|\n/', $input['owc_exceptions'] );
+            $owc_exceptions = array_filter( $owc_exceptions );
+            $owc_exceptions = array_values( $owc_exceptions );
+
+            $new_input['owc_exceptions'] = $owc_exceptions;
+
+        }
 
         return $new_input;
 
@@ -170,9 +191,25 @@ class Open_Whatsapp_Chat_Settings {
      */
     public function owc_message_callback() {
         printf(
-            '<textarea id="owc_message" name="owc_option[owc_message]">%s</textarea>',
+            '<textarea id="owc_message" name="owc_option[owc_message]">%s</textarea><span class="owc-desc">' . __( 'Shortcuts available: [title] -> print the page or post title.', 'open-whatsapp-chat' ) . '</span>',
             isset( $this->options['owc_message'] ) ? esc_attr( $this->options['owc_message'] ) : ''
         );
+    }
+
+    public function owc_exceptions_callback() {
+
+        echo '<textarea id="owc_exceptions" name="owc_option[owc_exceptions]">';
+
+        if ( isset( $this->options['owc_exceptions'] ) ) {
+            foreach( $this->options['owc_exceptions'] as $each ) {
+                echo $each . "\n";
+            }
+        } else {
+            echo '';
+        }
+
+        echo '</textarea><span class="owc-desc">' . __( 'Only numbers, example 5511988887777. Add one number per line. When adding more than one number, they will be used sequentially.', 'open-whatsapp-chat' ) . '</span>';
+
     }
 }
 

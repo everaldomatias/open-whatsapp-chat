@@ -7,7 +7,7 @@ jQuery(document).ready(function ($) {
             'action': 'update_position_number'
         };
 
-        $.post( ajax_object.ajax_url, data, function ( response ) { 
+        $.post( ajax_object.ajax_url, data, function ( response ) {
             return;
         });
 

@@ -85,7 +85,7 @@ class Open_Whatsapp_Chat {
 	* @author      Everaldo Matias <http://everaldomatias.github.io>
 	* @version     0.0.1
 	* @since       15/11/2018
-	* @return      Booleano
+	* @return      Boolean
 	*
 	*/
 	public function owc_what_browser( $browser ) {
@@ -96,6 +96,26 @@ class Open_Whatsapp_Chat {
 		if ( strlen( strstr( $agent, $browser ) ) > 0 ) {
 		    return true;
 		}
+	}
+	
+	/**
+	 *
+	 * Retorna a URL atual (e remove a barra no final da string).
+	 *
+	 * @author      Everaldo Matias <http://everaldomatias.github.io>
+	 * @version     0.0.1
+	 * @since       27/02/2023
+	 * @return      String
+	 *
+	 */
+	public function owc_get_url() {
+		$url = ( isset( $_SERVER['HTTPS'] ) ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+		if ( substr( $url, -1 ) === '/' ) {
+			$url = substr( $url, 0, -1 );
+		}
+
+		return $url;
 	}
 
 	/**
@@ -108,32 +128,90 @@ class Open_Whatsapp_Chat {
 		$owc_option   = get_option( 'owc_option' );
 		$owc_position = get_option( 'owc_position' );
 		$owc_position = $owc_position - 1;
-		
-		if ( $owc_option['owc_number'] && $owc_option['owc_message'] ) {
+
+		$is_show = true;
+		$owc_exceptions = $owc_option['owc_exceptions'];
+
+		foreach ( $owc_exceptions as $owc_exception ) {
+			
+			if (substr( $owc_exception, -1) === '/' ) {
+				$owc_exception = substr( $owc_exception, 0, -1 );
+			}
+
+			if ( trim( $owc_exception ) == $this->owc_get_url() ) {
+				$is_show = false;
+			}
+
+		}
+
+		if ( $is_show && $owc_option['owc_number'] && $owc_option['owc_message'] ) {
 
 			if ( $this->owc_what_browser( 'Firefox' ) ) {
-		    	$link = 'https://web.whatsapp.com/send?phone='	;
-		    } else {
-		    	$link = 'https://wa.me/'	;
-		    }
+				$link = 'https://web.whatsapp.com/send?phone=';
+			} else {
+				$link = 'https://wa.me/';
+			}
 
-		    $message = urlencode( $owc_option['owc_message'] );
-		    $message = str_replace( '+', '%20', $message );
+			$message = $owc_option['owc_message'];
+			$message = $this->owc_translate_shortcuts( $message );
 
-		    if ( ! empty( $owc_option['owc_button'] ) ) {
+			$message = urlencode( $message );
+			$message = str_replace( '+', '%20', $message );
 
-		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button owc-text" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
-		        echo '<span>' . esc_html( $owc_option['owc_button'] ) . '</span>';
+			if ( ! empty( $owc_option['owc_button'] ) ) {
+
+				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button owc-text" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
+				echo '<span>' . esc_html( $owc_option['owc_button'] ) . '</span>';
 				echo '</a>';
-		    	
-		    } else {
 
-		    	echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
+			} else {
+
+				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
 				echo '</a>';
 
 			}
 
 		}
+
+	}
+
+	/**
+	 * Function to return page title (page, post, taxonomy, 404 or blogname with default)
+	 */
+	public function owc_get_title() {
+
+		$title = '';
+
+		if ( is_page() || is_single() ) {
+			$title = get_the_title();
+		} elseif ( is_tax() || is_category() || is_tag() ) {
+			$title = single_term_title( '', false );
+		} elseif( is_post_type_archive() ) {
+			$title = post_type_archive_title( '', false );
+		} elseif ( is_home() ) {
+			$title = __( 'Blog', 'open-whatsapp-chat' );
+		} elseif( is_404() ) {
+			$title = __( 'Error 404', 'open-whatsapp-chat' );
+		}else {
+			$title = get_bloginfo( 'name' );
+		}
+
+		return apply_filters( 'the_title', $title );
+
+	}
+	
+	/**
+	 * Function to translate shortcuts with str_replace()
+	 */
+	public function owc_translate_shortcuts( $string ) {
+		
+		$return = $string;
+
+		if ( strpos( $string, "[title]" ) !== false ) {
+			$return = str_replace( "[title]", $this->owc_get_title(), $string );
+		}
+
+		return $return;
 
 	}
 

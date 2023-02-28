@@ -38,6 +38,9 @@ With this, I keep the plugin here on Github and will continue to improve it acco
 
 ## Changelog ##
 
+#### 3.0.0 - 2023-02-27 ####
+- Add option to not show button using exception page URL and add shortcut ['title'] to print page title on message
+
 #### 2.0.0 - 2020-08-11 ####
 - Add option to use more than one WhatsApp number (which are stored in a queue and displayed one by one each click on the button)
  
