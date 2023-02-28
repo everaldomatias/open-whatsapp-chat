@@ -146,12 +146,8 @@ class Open_Whatsapp_Chat {
 
 		if ( $is_show && $owc_option['owc_number'] && $owc_option['owc_message'] ) {
 
-			if ( $this->owc_what_browser( 'Firefox' ) ) {
-				$link = 'https://web.whatsapp.com/send?phone=';
-			} else {
-				$link = 'https://wa.me/';
-			}
-
+			$link = 'https://api.whatsapp.com/send?phone=';
+			
 			$message = $owc_option['owc_message'];
 			$message = $this->owc_translate_shortcuts( $message );
 
@@ -160,13 +156,13 @@ class Open_Whatsapp_Chat {
 
 			if ( ! empty( $owc_option['owc_button'] ) ) {
 
-				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button owc-text" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
+				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '&text=' . $message . '" class="owc-button owc-text" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
 				echo '<span>' . esc_html( $owc_option['owc_button'] ) . '</span>';
 				echo '</a>';
 
 			} else {
 
-				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '?text=' . $message . '" class="owc-button" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
+				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '&text=' . $message . '" class="owc-button" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
 				echo '</a>';
 
 			}

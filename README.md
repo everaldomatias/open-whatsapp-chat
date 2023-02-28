@@ -38,6 +38,9 @@ With this, I keep the plugin here on Github and will continue to improve it acco
 
 ## Changelog ##
 
+#### 3.1.0 - 2023-02-28 ####
+- Use only default API (https://api.whatsapp.com/send?phone=) and fix description field on admin
+
 #### 3.0.0 - 2023-02-27 ####
 - Add option to not show button using exception page URL and add shortcut ['title'] to print page title on message
 

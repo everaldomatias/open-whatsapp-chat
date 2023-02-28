@@ -208,7 +208,7 @@ class Open_Whatsapp_Chat_Settings {
             echo '';
         }
 
-        echo '</textarea><span class="owc-desc">' . __( 'Only numbers, example 5511988887777. Add one number per line. When adding more than one number, they will be used sequentially.', 'open-whatsapp-chat' ) . '</span>';
+        echo '</textarea><span class="owc-desc">' . __( 'Add one URL by line.', 'open-whatsapp-chat' ) . '</span>';
 
     }
 }
