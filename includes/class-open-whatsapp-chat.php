@@ -132,16 +132,16 @@ class Open_Whatsapp_Chat {
 		$is_show = true;
 		$owc_exceptions = $owc_option['owc_exceptions'];
 
-		foreach ( $owc_exceptions as $owc_exception ) {
+		if ( is_array( $owc_exceptions ) ) {
+			foreach ( $owc_exceptions as $owc_exception ) {
+				if ( substr( $owc_exception, -1) === '/' ) {
+					$owc_exception = substr( $owc_exception, 0, -1 );
+				}
 
-			if (substr( $owc_exception, -1) === '/' ) {
-				$owc_exception = substr( $owc_exception, 0, -1 );
+				if ( trim( $owc_exception ) == $this->owc_get_url() ) {
+					$is_show = false;
+				}
 			}
-
-			if ( trim( $owc_exception ) == $this->owc_get_url() ) {
-				$is_show = false;
-			}
-
 		}
 
 		if ( $is_show && $owc_option['owc_number'] && $owc_option['owc_message'] ) {

@@ -38,6 +38,9 @@ With this, I keep the plugin here on Github and will continue to improve it acco
 
 ## Changelog ##
 
+#### 3.3.1 - 2023-04-09 ####
+- Fix PHP error when exceptions is not an array on admin
+
 #### 3.3.0 - 2023-04-09 ####
 - Fix button CSS
 - Fix PHP error when numbers is empty on admin
