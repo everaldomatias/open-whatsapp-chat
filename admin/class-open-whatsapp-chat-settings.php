@@ -22,7 +22,7 @@ class Open_Whatsapp_Chat_Settings {
 
         if ( ! isset( $check_position ) || empty( $check_position ) ) {
             update_option( 'owc_position', intval( 1 ) );
-        } 
+        }
     }
 
     /**
@@ -32,9 +32,9 @@ class Open_Whatsapp_Chat_Settings {
         // This page will be under "Settings"
         add_options_page(
             __( 'Settings Admin', 'open-whatsapp-chat' ),
-            'Open WhatsApp Chat', 
-            'manage_options', 
-            'open-whatsapp-chat', 
+            'Open WhatsApp Chat',
+            'manage_options',
+            'open-whatsapp-chat',
             array( $this, 'create_admin_page' )
         );
     }
@@ -78,11 +78,11 @@ class Open_Whatsapp_Chat_Settings {
             '', // Title
             '', // Callback
             'open-whatsapp-chat' // Page
-        );  
+        );
 
         add_settings_field(
             'owc_number', // ID
-            __( 'WhatsApp Number', 'open-whatsapp-chat' ), // Title 
+            __( 'WhatsApp Number', 'open-whatsapp-chat' ), // Title
             array( $this, 'owc_number_callback' ), // Callback
             'open-whatsapp-chat', // Page
             'setting_section_id' // Section
@@ -90,7 +90,7 @@ class Open_Whatsapp_Chat_Settings {
 
         add_settings_field(
             'owc_button', // ID
-            __( 'WhatsApp Button Text', 'open-whatsapp-chat' ), // Title 
+            __( 'WhatsApp Button Text', 'open-whatsapp-chat' ), // Title
             array( $this, 'owc_button_callback' ), // Callback
             'open-whatsapp-chat', // Page
             'setting_section_id' // Section
@@ -98,7 +98,7 @@ class Open_Whatsapp_Chat_Settings {
 
         add_settings_field(
             'owc_message', // ID
-            __( 'WhatsApp Message', 'open-whatsapp-chat' ), // Title 
+            __( 'WhatsApp Message', 'open-whatsapp-chat' ), // Title
             array( $this, 'owc_message_callback' ), // Callback
             'open-whatsapp-chat', // Page
             'setting_section_id' // Section
@@ -106,7 +106,7 @@ class Open_Whatsapp_Chat_Settings {
 
         add_settings_field(
             'owc_exceptions', // ID
-            __( 'Exceptions pages', 'open-whatsapp-chat' ), // Title 
+            __( 'Exceptions pages', 'open-whatsapp-chat' ), // Title
             array( $this, 'owc_exceptions_callback' ), // Callback
             'open-whatsapp-chat', // Page
             'setting_section_id' // Section
@@ -119,7 +119,7 @@ class Open_Whatsapp_Chat_Settings {
      * @param array $input contains all settings fields as array keys
      */
     public function sanitize( $input ) {
-        
+
         $new_input = array();
 
         if ( isset( $input['owc_number'] ) ) {
@@ -155,14 +155,14 @@ class Open_Whatsapp_Chat_Settings {
 
     }
 
-    /** 
+    /**
      * Get the settings option array and print one of its values
      */
     public function owc_number_callback() {
 
         echo '<textarea id="owc_number" name="owc_option[owc_number]">';
 
-        if ( isset( $this->options['owc_number'] ) ) {
+        if ( isset( $this->options['owc_number'] ) && is_array( $this->options['owc_number'] ) ) {
             foreach( $this->options['owc_number'] as $each ) {
                 echo $each . "\n";
             }
@@ -171,10 +171,10 @@ class Open_Whatsapp_Chat_Settings {
         }
 
         echo '</textarea><span class="owc-desc">' . __( 'Only numbers, example 5511988887777. Add one number per line. When adding more than one number, they will be used sequentially.', 'open-whatsapp-chat' ) . '</span>';
-        
+
     }
 
-    /** 
+    /**
      * Get the settings option array and print one of its values
      * @version     0.0.1
      * @since       25/02/2019
@@ -186,7 +186,7 @@ class Open_Whatsapp_Chat_Settings {
         );
     }
 
-    /** 
+    /**
      * Get the settings option array and print one of its values
      */
     public function owc_message_callback() {

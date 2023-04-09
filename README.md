@@ -38,6 +38,11 @@ With this, I keep the plugin here on Github and will continue to improve it acco
 
 ## Changelog ##
 
+#### 3.3.0 - 2023-04-09 ####
+- Fix button CSS
+- Fix PHP error when numbers is empty on admin
+- Remove unused code from wp_localize_script
+
 #### 3.2.0 - 2023-02-28 ####
 - Add .po .mo to language pt_BR
 

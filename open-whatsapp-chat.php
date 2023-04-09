@@ -4,7 +4,7 @@
  * Plugin Name:       Open WhatsApp Chat
  * Plugin URI:        https://github.com/everaldomatias/open-whatsapp-chat
  * Description:       Add a simple button to open WhatsApp chat.
- * Version:           3.2.0
+ * Version:           3.3.0
  * Requires at least: 4.5
  * Requires PHP:      7.0
  * Author:            Everaldo Matias
@@ -24,7 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define( 'OWC_VERSION', '3.2.0' );
+define( 'OWC_VERSION', '3.3.0' );
 define( 'OWC_FILE', __FILE__ );
 
 if ( ! class_exists( 'Open_WhatsApp_Chat' ) ) {

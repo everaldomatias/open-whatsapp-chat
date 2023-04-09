@@ -55,7 +55,7 @@ class Open_Whatsapp_Chat {
 	 */
 	public function owc_js() {
 		wp_enqueue_script( 'owc-js', plugins_url( '/assets/js/owc-main.js', OWC_FILE ), array( 'jquery' ) );
-		wp_localize_script( 'owc-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'outro_valor' => 1234 ) );
+		wp_localize_script( 'owc-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Open_Whatsapp_Chat {
 
 	/**
 	 * Enqueue the Admin JS.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function owc_admin_js() {
@@ -97,7 +97,7 @@ class Open_Whatsapp_Chat {
 		    return true;
 		}
 	}
-	
+
 	/**
 	 *
 	 * Retorna a URL atual (e remove a barra no final da string).
@@ -133,7 +133,7 @@ class Open_Whatsapp_Chat {
 		$owc_exceptions = $owc_option['owc_exceptions'];
 
 		foreach ( $owc_exceptions as $owc_exception ) {
-			
+
 			if (substr( $owc_exception, -1) === '/' ) {
 				$owc_exception = substr( $owc_exception, 0, -1 );
 			}
@@ -147,7 +147,7 @@ class Open_Whatsapp_Chat {
 		if ( $is_show && $owc_option['owc_number'] && $owc_option['owc_message'] ) {
 
 			$link = 'https://api.whatsapp.com/send?phone=';
-			
+
 			$message = $owc_option['owc_message'];
 			$message = $this->owc_translate_shortcuts( $message );
 
@@ -195,12 +195,12 @@ class Open_Whatsapp_Chat {
 		return apply_filters( 'the_title', $title );
 
 	}
-	
+
 	/**
 	 * Function to translate shortcuts with str_replace()
 	 */
 	public function owc_translate_shortcuts( $string ) {
-		
+
 		$return = $string;
 
 		if ( strpos( $string, "[title]" ) !== false ) {
@@ -212,9 +212,9 @@ class Open_Whatsapp_Chat {
 	}
 
 	/**
-	 * 
+	 *
 	 * Update postion number with ajax on click button
-	 * 
+	 *
 	 */
 	public function ajax_update_position_number() {
 
@@ -225,17 +225,17 @@ class Open_Whatsapp_Chat {
 			$owc_count_numbers = count( $owc_option['owc_number'] );
 
 			$update = intval( $owc_position );
-			
+
 			if ( $owc_count_numbers == $owc_position ) {
 				$update = 1;
 			} else {
 				$update++;
 			}
-			
+
 			update_option( 'owc_position', intval( $update ) );
 
 		}
-		
+
 		wp_die();
 
 	}
