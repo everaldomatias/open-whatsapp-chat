@@ -55,7 +55,7 @@ class Open_Whatsapp_Chat {
 	 */
 	public function owc_js() {
 		wp_enqueue_script( 'owc-js', plugins_url( '/assets/js/owc-main.js', OWC_FILE ), array( 'jquery' ) );
-		wp_localize_script( 'owc-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+		// wp_localize_script( 'owc-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 	}
 
 	/**
