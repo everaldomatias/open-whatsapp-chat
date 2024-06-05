@@ -1,17 +1,17 @@
-# Copyright (C) 2023 Everaldo Matias
+# Copyright (C) 2024 Everaldo Matias
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Open WhatsApp Chat 3.1.0\n"
+"Project-Id-Version: Open WhatsApp Chat 3.3.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/open-whatsapp-chat\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-02-28T16:52:20+00:00\n"
+"POT-Creation-Date: 2024-06-05T22:32:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: open-whatsapp-chat\n"
 
 #. Plugin Name of the plugin
@@ -47,47 +47,63 @@ msgid "Save Settings"
 msgstr ""
 
 #: admin/class-open-whatsapp-chat-settings.php:85
-msgid "WhatsApp Number"
+msgid "WhatsApp Number*"
 msgstr ""
 
 #: admin/class-open-whatsapp-chat-settings.php:93
-msgid "WhatsApp Button Text"
+msgid "WhatsApp Message*"
 msgstr ""
 
 #: admin/class-open-whatsapp-chat-settings.php:101
-msgid "WhatsApp Message"
+msgid "WhatsApp Button Text"
 msgstr ""
 
 #: admin/class-open-whatsapp-chat-settings.php:109
+msgid "Button Position"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:117
 msgid "Exceptions pages"
 msgstr ""
 
-#: admin/class-open-whatsapp-chat-settings.php:173
+#: admin/class-open-whatsapp-chat-settings.php:187
 msgid "Only numbers, example 5511988887777. Add one number per line. When adding more than one number, they will be used sequentially."
 msgstr ""
 
-#: admin/class-open-whatsapp-chat-settings.php:184
+#: admin/class-open-whatsapp-chat-settings.php:197
 msgid "Empty for use only the WhatsApp logo."
 msgstr ""
 
-#: admin/class-open-whatsapp-chat-settings.php:194
+#: admin/class-open-whatsapp-chat-settings.php:212
+msgid "Left"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:213
+msgid "Right"
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:215
+msgid "Select the position of the WhatsApp button."
+msgstr ""
+
+#: admin/class-open-whatsapp-chat-settings.php:224
 msgid "Shortcuts available: [title] -> print the page or post title."
 msgstr ""
 
-#: admin/class-open-whatsapp-chat-settings.php:211
+#: admin/class-open-whatsapp-chat-settings.php:232
 msgid "Add one URL by line."
 msgstr ""
 
-#: includes/class-open-whatsapp-chat.php:159
-#: includes/class-open-whatsapp-chat.php:165
+#: includes/class-open-whatsapp-chat.php:162
+#: includes/class-open-whatsapp-chat.php:168
 msgid "Open the WhatsApp Chat"
 msgstr ""
 
-#: includes/class-open-whatsapp-chat.php:188
+#: includes/class-open-whatsapp-chat.php:191
 msgid "Blog"
 msgstr ""
 
-#: includes/class-open-whatsapp-chat.php:190
+#: includes/class-open-whatsapp-chat.php:193
 msgid "Error 404"
 msgstr ""
 

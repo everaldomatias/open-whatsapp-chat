@@ -82,7 +82,7 @@ class Open_Whatsapp_Chat_Settings {
 
         add_settings_field(
             'owc_number', // ID
-            __( 'WhatsApp Number', 'open-whatsapp-chat' ), // Title
+            __( 'WhatsApp Number*', 'open-whatsapp-chat' ), // Title
             array( $this, 'owc_number_callback' ), // Callback
             'open-whatsapp-chat', // Page
             'setting_section_id' // Section
@@ -90,7 +90,7 @@ class Open_Whatsapp_Chat_Settings {
 
         add_settings_field(
             'owc_message', // ID
-            __( 'WhatsApp Message', 'open-whatsapp-chat' ), // Title
+            __( 'WhatsApp Message*', 'open-whatsapp-chat' ), // Title
             array( $this, 'owc_message_callback' ), // Callback
             'open-whatsapp-chat', // Page
             'setting_section_id' // Section
