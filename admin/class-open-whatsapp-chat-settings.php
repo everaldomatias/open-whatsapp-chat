@@ -105,6 +105,14 @@ class Open_Whatsapp_Chat_Settings {
         );
 
         add_settings_field(
+            'owc_layout', // ID
+            __( 'Button Position', 'open-whatsapp-chat' ), // Title
+            array( $this, 'owc_layout_callback' ), // Callback
+            'open-whatsapp-chat', // Page
+            'setting_section_id' // Section
+        );
+
+        add_settings_field(
             'owc_exceptions', // ID
             __( 'Exceptions pages', 'open-whatsapp-chat' ), // Title
             array( $this, 'owc_exceptions_callback' ), // Callback
@@ -126,11 +134,17 @@ class Open_Whatsapp_Chat_Settings {
             $new_input['owc_number'] = $this->sanitize_multiline_input( $input['owc_number'] );
         }
 
-        if ( isset( $input['owc_button'] ) )
-            $new_input['owc_button'] = sanitize_text_field( $input['owc_button'] );
-
-        if ( isset( $input['owc_message'] ) )
+        if ( isset( $input['owc_message'] ) ) {
             $new_input['owc_message'] = sanitize_text_field( $input['owc_message'] );
+        }
+
+        if ( isset( $input['owc_button'] ) ) {
+            $new_input['owc_button'] = sanitize_text_field( $input['owc_button'] );
+        }
+
+        if ( isset( $input['owc_layout'] ) ) {
+            $new_input['owc_layout'] = sanitize_text_field( $input['owc_layout'] );
+        }
 
         if ( isset( $input['owc_exceptions'] ) ) {
             $new_input['owc_exceptions'] = $this->sanitize_multiline_input( $input['owc_exceptions'] );
@@ -183,6 +197,23 @@ class Open_Whatsapp_Chat_Settings {
             '<input type="text" id="owc_button" name="owc_option[owc_button]" value="%s" /><span class="owc-desc">' . __( 'Empty for use only the WhatsApp logo.', 'open-whatsapp-chat' ) . '</span>',
             isset( $this->options['owc_button'] ) ? esc_attr( $this->options['owc_button'] ) : ''
         );
+    }
+
+    /**
+     * Renders a select dropdown to allow the user to choose the position of the WhatsApp button.
+     * 
+     * @version     0.0.1
+     * @since       05/06/2024
+     */
+    public function owc_layout_callback() {
+        $position = isset( $this->options['owc_layout'] ) ? $this->options['owc_layout'] : 'left';
+        ?>
+        <select id="owc_layout" name="owc_option[owc_layout]">
+            <option value="left" <?php selected( $position, 'left' ); ?>><?php _e( 'Left', 'open-whatsapp-chat' ); ?></option>
+            <option value="right" <?php selected( $position, 'right' ); ?>><?php _e( 'Right', 'open-whatsapp-chat' ); ?></option>
+        </select>
+        <span class="owc-desc"><?php _e( 'Select the position of the WhatsApp button.', 'open-whatsapp-chat' ); ?></span>
+        <?php
     }
 
     /**

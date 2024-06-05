@@ -154,15 +154,18 @@ class Open_Whatsapp_Chat {
 			$message = urlencode( $message );
 			$message = str_replace( '+', '%20', $message );
 
+			$button_position = isset( $owc_option['owc_layout'] ) ? $owc_option['owc_layout'] : 'left';
+			$button_class = 'owc-button owc-' . esc_attr( $button_position );
+
 			if ( ! empty( $owc_option['owc_button'] ) ) {
 
-				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '&text=' . $message . '" class="owc-button owc-text" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
+				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '&text=' . $message . '" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" class="' . $button_class . ' owc-text" id="owc-button">';
 				echo '<span>' . esc_html( $owc_option['owc_button'] ) . '</span>';
 				echo '</a>';
 
 			} else {
 
-				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '&text=' . $message . '" class="owc-button" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" id="owc-button">';
+				echo '<a target="_blank" href="' . esc_url( $link ) . esc_html( $owc_option['owc_number'][$owc_position] ) . '&text=' . $message . '" title="' . __( 'Open the WhatsApp Chat', 'open-whatsapp-chat' ) . '" class="' . $button_class . '" id="owc-button">';
 				echo '</a>';
 
 			}
