@@ -54,9 +54,9 @@ class Open_Whatsapp_Chat_Settings {
                 settings_fields( 'owc_option_group' );
                 do_settings_sections( 'open-whatsapp-chat' );
                 echo '<div class="owc-line">';
-				    $text_button = __( 'Save Settings', 'open-whatsapp-chat' );
-				    submit_button( $text_button );
-			    echo '</div>';
+                    $text_button = __( 'Save Settings', 'open-whatsapp-chat' );
+                    submit_button( $text_button );
+                echo '</div>';
             ?>
             </form>
         </div>
@@ -89,17 +89,17 @@ class Open_Whatsapp_Chat_Settings {
         );
 
         add_settings_field(
-            'owc_button', // ID
-            __( 'WhatsApp Button Text', 'open-whatsapp-chat' ), // Title
-            array( $this, 'owc_button_callback' ), // Callback
+            'owc_message', // ID
+            __( 'WhatsApp Message', 'open-whatsapp-chat' ), // Title
+            array( $this, 'owc_message_callback' ), // Callback
             'open-whatsapp-chat', // Page
             'setting_section_id' // Section
         );
 
         add_settings_field(
-            'owc_message', // ID
-            __( 'WhatsApp Message', 'open-whatsapp-chat' ), // Title
-            array( $this, 'owc_message_callback' ), // Callback
+            'owc_button', // ID
+            __( 'WhatsApp Button Text', 'open-whatsapp-chat' ), // Title
+            array( $this, 'owc_button_callback' ), // Callback
             'open-whatsapp-chat', // Page
             'setting_section_id' // Section
         );
@@ -123,13 +123,7 @@ class Open_Whatsapp_Chat_Settings {
         $new_input = array();
 
         if ( isset( $input['owc_number'] ) ) {
-
-            $owc_numbers = preg_split( '/\r\n|\r|\n/', $input['owc_number'] );
-            $owc_numbers = array_filter( $owc_numbers );
-            $owc_numbers = array_values( $owc_numbers );
-
-            $new_input['owc_number'] = $owc_numbers;
-
+            $new_input['owc_number'] = $this->sanitize_multiline_input( $input['owc_number'] );
         }
 
         if ( isset( $input['owc_button'] ) )
@@ -138,17 +132,8 @@ class Open_Whatsapp_Chat_Settings {
         if ( isset( $input['owc_message'] ) )
             $new_input['owc_message'] = sanitize_text_field( $input['owc_message'] );
 
-        if ( isset( $input['owc_exceptions'] ) )
-            $new_input['owc_exceptions'] = sanitize_text_field( $input['owc_exceptions'] );
-
         if ( isset( $input['owc_exceptions'] ) ) {
-
-            $owc_exceptions = preg_split( '/\r\n|\r|\n/', $input['owc_exceptions'] );
-            $owc_exceptions = array_filter( $owc_exceptions );
-            $owc_exceptions = array_values( $owc_exceptions );
-
-            $new_input['owc_exceptions'] = $owc_exceptions;
-
+            $new_input['owc_exceptions'] = $this->sanitize_multiline_input( $input['owc_exceptions'] );
         }
 
         return $new_input;
@@ -156,22 +141,36 @@ class Open_Whatsapp_Chat_Settings {
     }
 
     /**
+     * Sanitize multiline input (e.g., phone numbers, exception URLs)
+     *
+     * @param mixed $input
+     * @return array
+     */
+    private function sanitize_multiline_input( $input ) {
+        $input_str = '';
+
+        if ( is_string( $input ) ) {
+            $input_str = $input;
+        } elseif ( is_array( $input ) ) {
+            $input_str = implode( "\n", $input );
+        }
+
+        $lines = preg_split( '/\r\n|\r|\n/', $input_str );
+
+        $lines = array_map( 'sanitize_text_field', $lines );
+        $lines = array_filter( $lines );
+        $lines = array_values( $lines );
+
+        return $lines;
+    }
+
+    /**
      * Get the settings option array and print one of its values
      */
     public function owc_number_callback() {
-
-        echo '<textarea id="owc_number" name="owc_option[owc_number]">';
-
-        if ( isset( $this->options['owc_number'] ) && is_array( $this->options['owc_number'] ) ) {
-            foreach( $this->options['owc_number'] as $each ) {
-                echo $each . "\n";
-            }
-        } else {
-            echo '';
-        }
-
-        echo '</textarea><span class="owc-desc">' . __( 'Only numbers, example 5511988887777. Add one number per line. When adding more than one number, they will be used sequentially.', 'open-whatsapp-chat' ) . '</span>';
-
+        $numbers = isset( $this->options['owc_number'] ) ? $this->options['owc_number'] : array();
+        echo '<textarea id="owc_number" name="owc_option[owc_number]">' . implode( "\n", array_map( 'esc_attr', $numbers ) ) . '</textarea>';
+        echo '<span class="owc-desc">' . __( 'Only numbers, example 5511988887777. Add one number per line. When adding more than one number, they will be used sequentially.', 'open-whatsapp-chat' ) . '</span>';
     }
 
     /**
@@ -197,21 +196,12 @@ class Open_Whatsapp_Chat_Settings {
     }
 
     public function owc_exceptions_callback() {
-
-        echo '<textarea id="owc_exceptions" name="owc_option[owc_exceptions]">';
-
-        if ( isset( $this->options['owc_exceptions'] ) ) {
-            foreach( $this->options['owc_exceptions'] as $each ) {
-                echo $each . "\n";
-            }
-        } else {
-            echo '';
-        }
-
-        echo '</textarea><span class="owc-desc">' . __( 'Add one URL by line.', 'open-whatsapp-chat' ) . '</span>';
-
+        $exceptions = isset( $this->options['owc_exceptions'] ) ? $this->options['owc_exceptions'] : array();
+        echo '<textarea id="owc_exceptions" name="owc_option[owc_exceptions]">' . implode( "\n", array_map( 'esc_attr', $exceptions ) ) . '</textarea>';
+        echo '<span class="owc-desc">' . __( 'Add one URL by line.', 'open-whatsapp-chat' ) . '</span>';
     }
 }
 
-if ( is_admin() )
+if ( is_admin() ) {
     $owc_settings_page = new Open_Whatsapp_Chat_Settings();
+}

@@ -38,6 +38,9 @@ With this, I keep the plugin here on Github and will continue to improve it acco
 
 ## Changelog ##
 
+#### 3.3.2 - 2024-06-05 ####
+- Fix multiline phones and exceptions on admin config
+
 #### 3.3.1 - 2023-04-09 ####
 - Fix PHP error when exceptions is not an array on admin
 
